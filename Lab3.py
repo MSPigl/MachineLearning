@@ -14,7 +14,11 @@ from sklearn.datasets import fetch_olivetti_faces
 n_row, n_col = 1,4
 image_shape = (64,64)
 
-people = fetch_olivetti_faces(data_home='Z:\\CSIS320\\data',shuffle=True)
+# School
+#people = fetch_olivetti_faces(data_home='Z:\\CSIS320D\\data',shuffle=True)
+
+# Home
+people = fetch_olivetti_faces(data_home='.\\data',shuffle=True)
 
 n_samples, n_features = people.data.shape
 
@@ -48,3 +52,14 @@ def plot_gallery(title, images, n_col=n_col, n_row=n_row, cmap=plt.cm.gray):
         plt.xticks(())
         plt.yticks(())
     plt.subplots_adjust(0.01, 0.05, 0.99, 0.93, 0.04, 0.)
+    
+def avg_clusters(data,clusters):
+    groups = np.unique(clusters)
+    nrows = len(groups)
+    ncols = data.shape[1]
+    result = np.empty((nrows,ncols))
+    for g in groups:
+        x = data[clusters==g]
+        for c in range(ncols):
+            result[g,c] = np.average(x[:,c])
+    return result
